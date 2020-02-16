@@ -1,0 +1,2 @@
+1)Import from RFM69.RFM69 not just RFM69
+2)change basestring to str

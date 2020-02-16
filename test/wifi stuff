@@ -1,0 +1,12 @@
+
+	ssid="AWS_Student"
+	priority=1
+	proto=RSN
+	key_mgmt=WPA-EAP
+	pairwise=CCMP
+	auth_alg=OPEN
+	eap=PEAP
+	identity="morbey14m1"
+	password="catscats1"
+	phase1="peaplabel=0"
+	phase2="auth=MSCHAPV2"

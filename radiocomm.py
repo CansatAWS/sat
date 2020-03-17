@@ -1,6 +1,10 @@
 import RFM69.RFM69 as RFM69
 from RFM69.RFM69registers import *
 import time
+import matplotlib
+
+
+data ={}
 
 def sendMessage(name, sensor, message, max_packet_size = 40):
     Node_ID = 10
@@ -21,6 +25,19 @@ def constructReceived(packet):
     packets = packet.split(",")
     file = open(packets[1]+".txt","a+")
     file.write(packet)
-    
+    return packets
 print(constructReceived("<name,data, sensor,>"))
+
+def listen():
+    packet = aquirePacket()
+    packet = ""
+    while True:
+        if packet[len(packet)] == ">":
+            packets = constructReceived(packet)
+            data[packets[2]]
+            updateGraph(packets[0], packets[1])
+            return packets
+        else:
+            packet += packet
+        
 

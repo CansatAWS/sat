@@ -1,8 +1,20 @@
+import RFM69.RFM69 as RFM69
+from RFM69.RFM69registers import *
+import time
+
 def sendMessage(name, sensor, message, max_packet_size = 40):
+    Node_ID = 10
+    Network_ID = 1
+    Is_promiscuous = False
+    radio = RFM69.RFM69(RF69_433MHZ,Node_ID,Network_ID,True,intPin = 22,rstPin = 18)
+    radio.rcCalibration()
+    radio.setHighPower(True)
+    radio.encrypt(0)
+    radio.promiscuous(Is_promiscuous)
     packet = "<" + message +","+ sensor +"," + name +">"
-    packets = []
+    
     for i in range (0,len(packet), max_packet_size):
-        packets.append(packet[i,max_packet_size*i])
+        radio.send(100, packet[i:max_packet_size*i])
 
 def constructReceived(packet):
     packet = packet[1:len(packet)-1] +("\n")
@@ -10,5 +22,5 @@ def constructReceived(packet):
     file = open(packets[1]+".txt","a+")
     file.write(packet)
     
-    
 print(constructReceived("<name,data, sensor,>"))
+
